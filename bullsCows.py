@@ -5,14 +5,51 @@ email: jelinkova.monik@seznam.cz
 discord: Mona_53888
 """
 
+import os
 import random
 
 def generovani_tajneho_cisla():
-    prvni_cifra = random.randint(1, 9) #různá od nuly
-    ostatni_cifry = random.sample(range(10), 3) #3 unikátní čísla 0-9
+    """
+    Fce generuje tajné číslo - 1. cifra je různá od nuly a v čísle není žádná cifra vícekrát
+    :return: list se 4 ciframi
+    :rtype: list    
+    """
+    prvni_cifra = random.randint(1, 9) 
+    ostatni_cifry = random.sample(list(set(range(10)).difference({prvni_cifra})), 3) 
     return [prvni_cifra] + ostatni_cifry
 
+def hadani():
+    """
+    Fce ukládá tipovanou hodnotu hráče a ověřuje, zda odpovídá podmínkám:
+    hodnota je 4ciferná, neobsahuje jiné znaky než číslice, na první pozici není nula
+    a neobsahuje duplicitní číslice.
+    """
+    tip = input("Zadej svůj tip (4 čísla): ")
+    hadani = []
+    if len(tip) != 4:
+        print("Zadané číslo nemá 4 cifry.")
+        return
+    elif tip.isnumeric() == False:
+        print("Zadej číslo!")
+        return 
+    elif int(tip[0]) == 0:
+        print("Hádané číslo nezačíná nulou.")
+        return
+    elif len(list(tip)) != len(list(set(tip))):
+        print("Použil jsi duplicitně cifru")
+        return
+    else:
+        hadani = [int(x) for x in tip]
+    return hadani
+
 def vysledek_hadani(tajne_cislo, tip):
+    """
+    Fce zazanamenává průběh hádání - porovnává zadanou hodnotu s tajným číslem 
+    a vyhodnocuje, kolik bylo bull(s) a cow(s).
+
+    :param tajne_cislo: výstup z fce generovani_tajneho_cisla()
+    :param tip: výstup hadani z fce hadani()
+    """
     bulls = 0
     cows = 0
     for i in range(4):
@@ -24,34 +61,14 @@ def vysledek_hadani(tajne_cislo, tip):
     cows = cows - bulls
     return bulls, cows
 
-def hadani():
-    tip = input("Zadej svůj tip (4 čísla): ")
-    hadani = []
-    if len(tip) != 4:
-        print("Zadané číslo nemá 4 cifry.")
-        return
-    elif tip.isnumeric() == False:
-        print("Zadejte číslo!")
-        return
-    elif int(tip[0]) == 0:
-        print("Hádané číslo nezačíná nulou.")
-        return
-    elif len(list(tip)) != len(list(set(tip))):
-        print("Použil jsi duplicitně cifru")
-        return
-    else:
-        for x in tip:
-            hadani.append(int(x))
-    return hadani
-
+#výpis hry:
+uvitani = """Vygenerovala jsem pro tebe 4místný tajný kód. 
+Zahraj si hru bulls and cows!"""
+print("-"*len(uvitani), "Ahoj!".center(len(uvitani)), "-"*len(uvitani), uvitani, "-"*len(uvitani), sep="\n")
 tajny_kod = generovani_tajneho_cisla()
 print(tajny_kod)
 
 while True:
-            #hadani = [int(x) for x in input("Zadej svůj tip (4 čísla): ")]
-            # hadani = []
-            # for x in input("Zadej svůj tip (4 čísla): "):
-            #     hadani.append(int(x))
     tip = hadani()
     if tip:
         vyhodnoceni = vysledek_hadani(tajny_kod, tip)
@@ -68,10 +85,12 @@ while True:
         else:
             cow = "cows"
 
-        print(f"Vyhodnocení: {vyhodnoceni[0]} {bull}, {vyhodnoceni[1]} {cow}")
+
+        print(f"Vyhodnocení: {vyhodnoceni[0]} {bull}, {vyhodnoceni[1]} {cow} \n {"-" * len(uvitani)}")
 
         if vyhodnoceni[0] == 4:
-            print("Gratuluji! Podařilo se ti uhádnout tajný kód.")
+            print("Gratuluji! Podařilo se ti uhádnout tajný kód.", "\n", "-" * len(uvitani))
             break
     else:
         continue
+
