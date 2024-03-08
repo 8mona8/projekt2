@@ -67,8 +67,9 @@ Zahraj si hru bulls and cows!"""
 print("-"*len(uvitani), "Ahoj!".center(len(uvitani)), "-"*len(uvitani), uvitani, "-"*len(uvitani), sep="\n")
 tajny_kod = generovani_tajneho_cisla()
 print(tajny_kod)
-
+pokus = 0
 while True:
+    pokus += 1
     tip = hadani()
     if tip:
         vyhodnoceni = vysledek_hadani(tajny_kod, tip)
@@ -89,7 +90,7 @@ while True:
         print(f"Vyhodnocení: {vyhodnoceni[0]} {bull}, {vyhodnoceni[1]} {cow} \n {"-" * len(uvitani)}")
 
         if vyhodnoceni[0] == 4:
-            print("Gratuluji! Podařilo se ti uhádnout tajný kód.", "\n", "-" * len(uvitani))
+            print(f"Gratuluji! Podařilo se ti uhádnout tajný kód. Zvládl jsi to na {pokus}. pokus. \n {"-" * len(uvitani)}")
             break
     else:
         continue
