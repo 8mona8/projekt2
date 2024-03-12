@@ -66,7 +66,7 @@ uvitani = """Vygenerovala jsem pro tebe 4místný tajný kód.
 Zahraj si hru bulls and cows!"""
 print("-"*len(uvitani), "Ahoj!".center(len(uvitani)), "-"*len(uvitani), uvitani, "-"*len(uvitani), sep="\n")
 tajny_kod = generovani_tajneho_cisla()
-print(tajny_kod)
+#print(tajny_kod)
 pokus = 0
 while True:
     pokus += 1
