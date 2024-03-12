@@ -5,7 +5,6 @@ email: jelinkova.monik@seznam.cz
 discord: Mona_53888
 """
 
-import os
 import random
 
 def generovani_tajneho_cisla():
